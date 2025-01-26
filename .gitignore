@@ -1,0 +1,12 @@
+# Folder
+cache/
+cmake-build-debug/
+out/
+
+# Files
+*.log
+
+# Binaries
+*.exe
+*.deb
+*.dmg
