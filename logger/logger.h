@@ -91,7 +91,7 @@ public:
         this->handler.insert(std::pair(LOGGER::LEVEL::UNKNOWN,  LevelHandler(LOGGER::LEVEL::UNKNOWN,    LOGGER::COLOR::WHITE,   0)));
 
         // Create the logger folder
-        mkdir(root_dir.c_str());
+        mkdir(root_dir.c_str(), 0777);
 
         // Create the logger log file
         if (this->root_dir[this->root_dir.size() - 1] == '/' ||

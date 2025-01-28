@@ -2,6 +2,7 @@
 cache/
 cmake-build-debug/
 out/
+.idea/
 
 # Files
 *.log
