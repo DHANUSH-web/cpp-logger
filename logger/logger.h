@@ -112,6 +112,16 @@ public:
         return this->log_file.is_open();
     }
 
+    // Get the root dir of the logger
+    std::string get_root_dir() const {
+        return this->root_dir;
+    }
+
+    // Get the file name of logger
+    std::string get_file_name() const {
+        return this->file_name;
+    }
+
     // Get the time of when logger started
     std::chrono::system_clock::time_point get_start_time() const {
         return this->start_time;
