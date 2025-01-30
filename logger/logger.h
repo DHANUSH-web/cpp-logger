@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <chrono>
+#include <manager.h>
 #include <map>
 
 // Logger namespace with utilities
@@ -105,6 +106,9 @@ public:
         // update the status of logger
         this->log_file << ">>> Logger initiated at " << std::chrono::system_clock::now() << " <<<\n";
         std::cout << LOGGER::COLOR::CYAN << ">>> Logger initiated at " << std::chrono::system_clock::now() << " <<<" << LOGGER::COLOR::RESET << "\n";
+
+        // Register the logger to manager buffer
+        BUF_MANAGER<Logger>::register_buf(this);
     }
 
     // Check if the logger is active or running
@@ -177,6 +181,7 @@ public:
         this->end_time = std::chrono::system_clock::now();
         this->log_file << ">>> Logger exited at " << this->end_time << " <<<\n";
         this->log_file.close();
+        BUF_MANAGER<Logger>::unregister_buf(this);       // Unregister the logger from buffer manager
         std::cout << LOGGER::COLOR::CYAN << ">>> Exited Logger at " << this->end_time << " <<<" << LOGGER::COLOR::RESET << "\n";
     }
 
