@@ -107,7 +107,7 @@ public:
         ) {
             this->log_file.open(this->root_dir + file_name);
         } else {
-            this->log_file.open(this->root_dir + "\\" + file_name);
+            this->log_file.open(this->root_dir + "/" + file_name);
         }
 
         // update the status of logger
