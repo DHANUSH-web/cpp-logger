@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# set the path variables
+BUILD_DIR=out
+GPP=$(which g++)
+CMAKE=$(which cmake)
+MAKE=$(which make)
+BINARY=cpplogger
+
+# Remove the build dir if exists
+if [ -e $BUILD_DIR ]; then
+  rm -rf $BUILD_DIR
+fi
+
+# Create fresh the build directory
+mkdir -p $BUILD_DIR
+
+# Change the directory to build directory
+cd $BUILD_DIR
+
+# Compile the project with cmake
+$CMAKE -DCMAKE_CXX_COMPILER=$GPP -DCMAKE_MAKE_PROGRAM=$MAKE ..
+
+# Build the Makefile with CMake
+# $CMAKE --build .
+
+# Build the Makefile with make program
+$MAKE
+
+# Change the directory to root
+cd ..
+
+# Execute the binary
+"./$BUILD_DIR/$BINARY"
