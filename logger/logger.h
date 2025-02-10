@@ -10,11 +10,19 @@
 #define LOGGER_H
 
 #include <iostream>
-#include <sys/stat.h>
 #include <fstream>
 #include <chrono>
 #include <manager.h>
 #include <map>
+
+// Handle file system for specific platform
+#ifdef _WIN32
+#include <direct.h>
+#define MKDIR(path) _mkdir(path)
+#else
+#include <sys/stat.h>
+#define MKDIR(path) mkdir(path, 0777)
+#endif
 
 // Logger namespace with utilities
 namespace LOGGER {
@@ -99,7 +107,7 @@ public:
         this->handler.insert(std::pair(LOGGER::LEVEL::UNKNOWN,  LevelHandler(LOGGER::LEVEL::UNKNOWN,    LOGGER::COLOR::WHITE,   0)));
 
         // Create the logger folder
-        mkdir(root_dir.c_str(), 0777);
+        MKDIR(root_dir.c_str());
 
         // Create the logger log file
         if (this->root_dir[this->root_dir.size() - 1] == '/' ||

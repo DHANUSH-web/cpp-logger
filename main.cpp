@@ -9,9 +9,16 @@
 
 #include <logger.h>
 
+// Handle file system for specific platform
+#ifdef _WIN32
+#include <direct.h>
+#else
+#include <unistd.h>
+#endif
+
 int main() {
-    const std::string root_dir = "";    // Insert absolute path of log file root
-    const std::string log_file = "";    // Insert log file name
+    const std::string root_dir = std::string(getcwd(nullptr, 100)) + std::string("/cache");    // Insert absolute path of log file root
+    const std::string log_file = "test_logger.log";    // Insert log file name
 
     // Initiated logger instance
     auto logger = Logger(root_dir, log_file);
