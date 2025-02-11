@@ -3,8 +3,8 @@
 REM Set the path variables
 set BUILD_DIR=out
 set EXECUTABLE="cpplogger.exe"
-set GCC="clang.exe"
-set GPP="clang++.exe"
+set GCC="gcc.exe"
+set GPP="g++.exe"
 set CMAKE="cmake.exe"
 set MAKE="mingw32-make.exe"
 set GENERATOR="MinGW Makefiles"

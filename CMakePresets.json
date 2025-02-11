@@ -14,8 +14,8 @@
             "binaryDir": "${sourceDir}/out",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+                "CMAKE_C_COMPILER": "gcc.exe",
+                "CMAKE_CXX_COMPILER": "g++.exe",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
             }
         },
@@ -27,8 +27,8 @@
             "binaryDir": "${sourceDir}/out",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+                "CMAKE_C_COMPILER": "gcc.exe",
+                "CMAKE_CXX_COMPILER": "g++.exe",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
             }
         },
