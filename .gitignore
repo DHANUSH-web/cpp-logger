@@ -3,6 +3,8 @@ cache/
 cmake-build-debug/
 out/
 .idea/
+.vscode/
+.vs/
 
 # Files
 *.log
@@ -11,3 +13,4 @@ out/
 *.exe
 *.deb
 *.dmg
+
