@@ -79,6 +79,7 @@ public:
 
 class Logger {
 protected:
+    std::string name;
     std::string root_dir;
     std::string file_name;
     std::ofstream log_file;
@@ -89,7 +90,8 @@ protected:
     int log_count;
 
 public:
-    Logger(const std::string &root_dir, const std::string &file_name, const bool debug = false) {
+    Logger(const std::string name, const std::string &root_dir, const std::string &file_name, const bool debug = false) {
+        this->name          = name;
         this->root_dir      = root_dir;
         this->file_name     = file_name;
         this->debug         = debug;
@@ -119,8 +121,8 @@ public:
         }
 
         // update the status of logger
-        this->log_file << ">>> Logger initiated at " << std::chrono::system_clock::now() << " <<<\n";
-        std::cout << LOGGER::COLOR::CYAN << ">>> Logger initiated at " << std::chrono::system_clock::now() << " <<<" << LOGGER::COLOR::RESET << "\n";
+        this->log_file << ">>> Logger " << this->name << " initiated at " << std::chrono::system_clock::now() << " <<<\n";
+        std::cout << LOGGER::COLOR::CYAN << ">>> Logger " << this->name << " initiated at " << std::chrono::system_clock::now() << " <<<" << LOGGER::COLOR::RESET << "\n";
 
         // Register the logger to manager buffer
         BUF_MANAGER<Logger>::register_buf(this);
@@ -173,7 +175,7 @@ public:
     // Add the main log method
     void log(const std::string &message, const std::string &level = LOGGER::LEVEL::INFO, const bool debug_once = false) {
         if (!is_active()) {
-            std::cerr << "[ERROR]: Logger not active\n";
+            std::cerr << "[ERROR]: Logger " << this->name << " not active\n";
             exit(EXIT_FAILURE);
         }
 
@@ -194,10 +196,10 @@ public:
         }
 
         this->end_time = std::chrono::system_clock::now();
-        this->log_file << ">>> Logger exited at " << this->end_time << " <<<\n";
+        this->log_file << ">>> Logger " << this->name << " exited at " << this->end_time << " <<<\n";
         this->log_file.close();
         BUF_MANAGER<Logger>::unregister_buf(this);       // Unregister the logger from buffer manager
-        std::cout << LOGGER::COLOR::CYAN << ">>> Exited Logger at " << this->end_time << " <<<" << LOGGER::COLOR::RESET << "\n";
+        std::cout << LOGGER::COLOR::CYAN << ">>> Exited Logger " << this->name << " at " << this->end_time << " <<<" << LOGGER::COLOR::RESET << "\n";
     }
 
     // Display all the log levels for better DevEx
