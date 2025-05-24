@@ -12,8 +12,8 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include "manager.h"
 #include <map>
+#include <stdexcept> // Required for std::runtime_error
 
 // Handle file system for specific platform
 #ifdef _WIN32
@@ -91,7 +91,7 @@ protected:
 
 public:
     Logger(const std::string name, const std::string &root_dir, const std::string &file_name, const bool debug = false) {
-        this->name          = name;
+        this->name = name;
         this->root_dir      = root_dir;
         this->file_name     = file_name;
         this->debug         = debug;
@@ -120,12 +120,22 @@ public:
             this->log_file.open(this->root_dir + "/" + file_name);
         }
 
+        // Check if the log file was opened successfully
+        if (!this->log_file.is_open()) {
+            throw std::runtime_error("Failed to open log file at: " + (this->root_dir[this->root_dir.size() - 1] == '/' || this->root_dir[this->root_dir.size() - 1] == '\\' ? this->root_dir : this->root_dir + "/") + file_name);
+        }
+
         // update the status of logger
         this->log_file << ">>> Logger " << this->name << " initiated at " << std::chrono::system_clock::now() << " <<<\n";
         std::cout << LOGGER::COLOR::CYAN << ">>> Logger " << this->name << " initiated at " << std::chrono::system_clock::now() << " <<<" << LOGGER::COLOR::RESET << "\n";
 
-        // Register the logger to manager buffer
-        BUF_MANAGER<Logger>::register_buf(this);
+    }
+
+    // Destructor to ensure exit_logger is called
+    ~Logger() {
+        if (is_active()) {
+            exit_logger();
+        }
     }
 
     // Check if the logger is active or running
@@ -183,8 +193,20 @@ public:
             print_log(message, level);
         }
 
+        // Check for invalid log level before accessing handler
+        if (this->handler.find(level) == this->handler.end()) {
+            // To prevent recursive error logging if this itself is part of an error log,
+            // we print to cerr and throw a different, more specific error.
+            // Or, simply throw, assuming this method won't be called with invalid levels internally.
+            // For now, let's throw a runtime_error.
+            // A more advanced strategy might log this specific error to a default/emergency logger
+            // or use a predefined "UNKNOWN" level if we want to record the attempt.
+            // However, throwing is safest to indicate misuse of the API.
+            throw std::runtime_error("Invalid log level used: " + level);
+        }
+
         this->log_file << std::chrono::system_clock::now() << " " << level << " " << message << "\n";
-        this->handler.at(level).count++;
+        this->handler.at(level).count++; // Now safe to use .at() due to the check above, or use find result.
         this->log_count++;
     }
 
@@ -198,7 +220,6 @@ public:
         this->end_time = std::chrono::system_clock::now();
         this->log_file << ">>> Logger " << this->name << " exited at " << this->end_time << " <<<\n";
         this->log_file.close();
-        BUF_MANAGER<Logger>::unregister_buf(this);       // Unregister the logger from buffer manager
         std::cout << LOGGER::COLOR::CYAN << ">>> Exited Logger " << this->name << " at " << this->end_time << " <<<" << LOGGER::COLOR::RESET << "\n";
     }
 
