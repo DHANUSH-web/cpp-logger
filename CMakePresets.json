@@ -1,60 +1,47 @@
 {
     "version": 3,
-    "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 19,
-        "patch": 0
-    },
     "configurePresets": [
         {
-            "name": "cpplogger-win32-release",
+            "name": "win32-debug",
             "hidden": false,
-            "description": "Default release configuration for Windows",
+            "description": "CLogger Project Configuration for Windows System",
             "generator": "MinGW Makefiles",
-            "binaryDir": "${sourceDir}/out",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_C_COMPILER": "gcc.exe",
-                "CMAKE_CXX_COMPILER": "g++.exe",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
-            }
-        },
-        {
-            "name": "cpplogger-win32-debug",
-            "hidden": false,
-            "description": "Default debug configuration for Windows",
-            "generator": "MinGW Makefiles",
-            "binaryDir": "${sourceDir}/out",
+            "binaryDir": "${sourceDir}/out/${presetName}",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_C_COMPILER": "gcc.exe",
-                "CMAKE_CXX_COMPILER": "g++.exe",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
             }
         },
         {
-            "name": "cpplogger-unix-release",
+            "name": "win32-release",
             "hidden": false,
-            "description": "Default release configuration for Unix",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/out",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_C_COMPILER": "/usr/bin/gcc",
-                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
-            }
-        },
-        {
-            "name": "cpplogger-unix-debug",
-            "hidden": false,
-            "description": "Default debug configuration for Unix",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/out",
+            "description": "CLogger Project Configuration for Windows System",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/out/${presetName}",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_C_COMPILER": "/usr/bin/gcc",
-                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+            }
+        },
+        {
+            "name": "unix-debug",
+            "hidden": false,
+            "description": "CLogger Project Configuration for Unix System",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+            }
+        },
+        {
+            "name": "unix-release",
+            "hidden": false,
+            "description": "CLogger Project Configuration for Unix System",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
             }
         }

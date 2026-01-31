@@ -1,34 +1,52 @@
 #!/bin/bash
 
-# set the path variables
-BUILD_DIR=out
-GPP=$(which g++)
-CMAKE=$(which cmake)
-MAKE=$(which make)
-BINARY=cpplogger
+# build and run the executable
+if [[ "$1" == "run" ]]; then
+    if [[ -z "$2" || "$2" == "--debug" ]]; then
+        cmake --preset unix-debug && cmake --build ./out/unix-debug && ./out/unix-debug/main
+    elif [[ "$2" == "--release" ]]; then
+        cmake --preset unix-release && cmake --build ./out/unix-release && ./out/unix-release/main
+    else
+        echo "Invalid option. Use --debug or --release."
+        exit 1
+    fi
+# build the executable
+elif [[ "$1" == "build" ]]; then
+    if [[ -z "$2" || "$2" == "--debug" ]]; then
+        echo "Building debug version..."
+        cmake --preset unix-debug && cmake --build ./out/unix-debug
+    elif [[ "$2" == "--release" ]]; then
+        echo "Building release version..."
+        cmake --preset unix-release && cmake --build ./out/unix-release
+    elif [[ "$2" == "--all" ]]; then
+        echo "Building both debug and release versions..."
 
-# Remove the build dir if exists
-if [ -e $BUILD_DIR ]; then
-  rm -rf $BUILD_DIR
+        # Build for debug
+        echo -e "\e[32mBuilding debug version...\e[0m"
+        cmake --preset unix-debug && cmake --build ./out/unix-debug
+        
+        # Build for release
+        echo -e "\e[32mBuilding release version...\e[0m"
+        cmake --preset unix-release && cmake --build ./out/unix-release
+    else
+        echo "Invalid option. Use --debug or --release or --all."
+        exit 1
+    fi
+# clean the build directory
+elif [[ "$1" == "clean" ]]; then
+    if [[ "$2" == "--debug" ]]; then
+        rm -rf ./out/unix-debug
+        echo "Cleaned debug build directory."
+    elif [[ "$2" == "--release" ]]; then
+        rm -rf ./out/unix-release
+        echo "Cleaned release build directory."
+    else
+        rm -rf ./out
+        echo "Cleaned all build directories."
+    fi
+elif [[ "$1" == "help" ]]; then
+    glow README.md 2>/dev/null || cat README.md
+else
+    echo "Usage: ./build [build | run | clean | help] [--debug | --release]"
+    exit 1
 fi
-
-# Create fresh the build directory
-mkdir -p $BUILD_DIR
-
-# Change the directory to build directory
-cd $BUILD_DIR
-
-# Compile the project with cmake
-$CMAKE -DCMAKE_CXX_COMPILER=$GPP -DCMAKE_MAKE_PROGRAM=$MAKE ..
-
-# Build the Makefile with CMake
-# $CMAKE --build .
-
-# Build the Makefile with make program
-$MAKE
-
-# Change the directory to root
-cd ..
-
-# Execute the binary
-"./$BUILD_DIR/$BINARY"
