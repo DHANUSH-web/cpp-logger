@@ -44,7 +44,32 @@ add_executable(your_target your_source.cpp
 
 **Note:** You can also run a demo program inside the logger `main.cpp` by running the build script.
 
-In the terminal, run `./build.bat` if you are on Windows or else run `./build` on Linux or macOS.
+**_Windows_** — In the terminal, run:
+
+```sh
+./build.bat
+```
+
+This builds the project and runs the demo executable.
+
+**_Linux / macOS_** — Use the `build` script with one of the following commands:
+
+| Command | Description |
+|--------|-------------|
+| `./build run` | Build and run the demo (default: debug). Use `./build run --release` for release. |
+| `./build build` | Build only (default: debug). Use `--release` for release or `--all` for both. |
+| `./build clean` | Remove build output. Use `--debug` or `--release` to clean one variant, or no option to clean all. |
+| `./build help` | Show ./build usage. |
+
+Examples:
+
+```sh
+./build run              # build and run (debug)
+./build run --release    # build and run (release)
+./build build --all      # build debug and release
+./build clean            # clean all build directories
+./build help             # helper command
+```
 
 ## Quick Start
 
