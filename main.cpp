@@ -19,7 +19,7 @@
 
 int main() {
     const std::string name     = "main";
-    const std::string root_dir = std::string(getcwd(nullptr, 100)) + std::string("/cache");    // Insert absolute path of log file root
+    const std::string root_dir = std::string(getcwd(nullptr, 100)) + std::string("/logs");    // Insert absolute path of log file root
     const std::string log_file = "test_logger.log";    // Insert log file name
     const bool debug           = true;
 

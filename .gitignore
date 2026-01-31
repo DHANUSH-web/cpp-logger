@@ -1,16 +1,12 @@
 # Folder
-cache/
+logs/
 cmake-build-debug/
 out/
 .idea/
 .vscode/
 .vs/
 
-# Files
-*.log
-
 # Binaries
 *.exe
 *.deb
 *.dmg
-
